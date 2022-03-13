@@ -77,13 +77,45 @@ public class MessageListener extends ListenerAdapter {
 
             msg.getChannel().sendMessage("you are " + i + " you created your account on: " + msg.getAuthor().getTimeCreated().toString().substring(0, msg.getAuthor().getTimeCreated().toString().length() - 14)).queue();
         }
-        try {
-            if (((msg.getContentRaw().substring(0, msg.getContentRaw().indexOf(' '))).equals(prefix + "whoid")) && length > 1) {
-                String str = msg.getContentRaw();
-                String[] sp = str.split(" ");
-                Long id = Long.parseLong(sp[1]);
-                msg.getChannel().sendMessage("the id is " + id).queue();
-            }
-        }catch (Exception e){}
+       if(((msg.getContentRaw().substring(0, msg.getContentRaw().indexOf(' '))).equals(prefix + "ban"))&& length > 1){
+
+           Guild guild = event.getGuild();
+           guild.ban(msg.getMentionedUsers().get(0), 1).queue();
+
+           msg.getChannel().sendMessage("banned " + msg.getMentionedUsers().get(0).getName()).queue();
+       }
+       if(((msg.getContentRaw().substring(0, msg.getContentRaw().indexOf(' '))).equals(prefix + "banid"))&& length > 1){
+
+           Guild guild = event.getGuild();
+           String[] sp = msg.getContentRaw().split(" ");
+           String id = sp[1];
+           guild.ban(User.fromId(id) ,1).queue();
+           msg.getChannel().sendMessage("banned " + User.fromId(id).getName()).queue();
+       }
+        if(((msg.getContentRaw().substring(0, msg.getContentRaw().indexOf(' '))).equals(prefix + "unban"))&& length > 1){
+            String[] sp = msg.getContentRaw().split(" ");
+            String id = sp[1];
+            Guild guild = event.getGuild();
+            guild.unban(User.fromId(id)).queue();
+            msg.getChannel().sendMessage("unbanned" + User.fromId(id).getName()).queue();
+        }
+
+        if(((msg.getContentRaw().substring(0, msg.getContentRaw().indexOf(' '))).equals(prefix + "whoid"))&& length > 1){
+            String[] sp = msg.getContentRaw().split(" ");
+            String id = sp[1];
+            Guild guild = event.getGuild();
+
+            msg.getChannel().sendMessage("they are" + User.fromId(id).getName()).queue();
+        }
+
+        if(((msg.getContentRaw().substring(0, msg.getContentRaw().indexOf(' '))).equals(prefix + "kick"))&& length > 1){
+
+            Guild guild = event.getGuild();
+            Member kickeed = msg.getMentionedMembers().get(0);
+            guild.kick(kickeed).queue();
+
+            msg.getChannel().sendMessage("kicked" + msg.getMentionedUsers().get(0).getName()).queue();
+        }
     }
+
 }
