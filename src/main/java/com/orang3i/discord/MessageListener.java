@@ -38,9 +38,9 @@ public class MessageListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) throws NullPointerException {
 
-
+        String  prefix = "!";
         Message msg = event.getMessage();
-        if (msg.getContentRaw().equals("!ping"))
+        if (msg.getContentRaw().equals(prefix+"ping"))
         {
             MessageChannel channel = event.getChannel();
             long time = System.currentTimeMillis();
@@ -48,6 +48,11 @@ public class MessageListener extends ListenerAdapter {
                     .queue(response /* => Message */ -> {
                         response.editMessageFormat("Pong: %d ms", System.currentTimeMillis() - time).queue();
                     });
+        }
+
+        if(msg.getContentRaw().equals(prefix+"whoami")){
+            String i = msg.getAuthor().getName();
+            msg.getChannel().sendMessage("you are "+i).queue();
         }
     }
 }
