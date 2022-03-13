@@ -1,0 +1,5 @@
+com\orang3i\config\DiscordConfig.class
+com\orang3i\util\YamlUtils.class
+com\orang3i\Main.class
+com\orang3i\ProeBot.class
+com\orang3i\discord\MessageListener.class
